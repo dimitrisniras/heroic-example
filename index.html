@@ -18,6 +18,55 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
     
+    <script src="https://cdn.jsdelivr.net/npm/vega@4.4.0"></script>
+    
+    <!-- Styles from Octopus application -->
+	<link rel="stylesheet" href="/octopus/font-awesome/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="/octopus/Ionicons/css/ionicons.min.css"/>
+	<link rel="stylesheet" href="/octopus/angular-ui-notification/dist/angular-ui-notification.min.css"/>
+	<link rel="stylesheet" href="/octopus/AdminLTE.min.css"/>
+	<link rel="stylesheet" href="/octopus/bootstrap-slider/slider.css"/>
+	<link rel="stylesheet" href="/octopus/bootstrap-daterangepicker/daterangepicker.css"/>
+	<link rel="stylesheet" href="/octopus/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"/>
+	<link rel="stylesheet" href="/octopus/iCheck/all.css"/>
+	<link rel="stylesheet" href="/octopus/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css"/>
+	<link rel="stylesheet" href="/octopus/timepicker/bootstrap-timepicker.min.css"/>
+	<link rel="stylesheet" href="/octopus/select2/dist/css/select2.min.css"/>
+	<link rel="stylesheet" href="/octopus/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
+	<link rel="stylesheet" href="/octopus/datatables.net-bs/css/dataTables.bootstrap.min.css"/>
+
+	<!-- JS included frameworks from Octopus application -->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/octopus/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/octopus/jquery-ui/jquery-ui.min.js"></script>
+	<script src="/octopus/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="/octopus/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/octopus/fastclick/lib/fastclick.js"></script>
+	<script src="/octopus/chart.js/Chart.js"></script>
+	<script src="/octopus/angular-file-upload/dist/angular-file-upload.min.js"></script>
+	<script src="/octopus/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+	<script src="/octopus/angular-modal-service/dst/angular-modal-service.min.js"></script>
+	<script src="/octopus/adminlte.min.js"></script>
+	<script src="/octopus/d3/d3.js"></script>
+	<script src="/octopus/c3/c3.js"></script>
+	<script src="/octopus/angular-chart/angular-chart.js"></script>
+	<script src="/octopus/demo.js"></script>
+  	<script src="/octopus/select2/dist/js/select2.full.min.js"></script>
+  	<script src="/octopus/input-mask/jquery.inputmask.js"></script>
+  	<script src="/octopus/input-mask/jquery.inputmask.date.extensions.js"></script>
+  	<script src="/octopus/input-mask/jquery.inputmask.extensions.js"></script>
+  	<script src="/octopus/moment/min/moment.min.js"></script>
+  	<script src="/octopus/bootstrap-daterangepicker/daterangepicker.js"></script>
+  	<script src="/octopus/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  	<script src="/octopus/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+  	<script src="/octopus/timepicker/bootstrap-timepicker.min.js"></script>
+  	<script src="/octopus/iCheck/icheck.min.js"></script>
+  	<script src="/octopus/ckeditor/ckeditor.js"></script>
+  	<script src="/octopus/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+  	<script src="/octopus/datatables.net/js/jquery.dataTables.min.js"></script>
+  	<script src="/octopus/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    
     <style>
 		.row.vdivide [class*='col-']:not(:last-child):after {
 		  background: #e0e0e0;
@@ -32,6 +81,43 @@
 		}
 		.jumbotron {
 		  min-height: 250px;
+		}
+		.color-palette {
+		    height: 35px;
+		    line-height: 35px;
+		    text-align: center;
+		}
+		.color-palette-set {
+			margin-bottom: 15px;
+		}
+		.color-palette span {
+		    display: none;
+		    font-size: 12px;
+		}
+		.color-palette:hover span {
+		    display: block;
+		}
+		.color-palette-box h4 {
+		    position: absolute;
+		    top: 100%;
+		    left: 25px;
+		    margin-top: -40px;
+		    color: rgba(255, 255, 255, 0.8);
+		    font-size: 12px;
+		    display: block;
+		    z-index: 7;
+		}
+		.example-modal .modal {
+		  	position: relative;
+		  	top: auto;
+		    bottom: auto;
+		    right: auto;
+		    left: auto;
+		    display: block;
+		    z-index: 1;
+		}
+		.example-modal .modal {
+		    background: transparent !important;
 		}
     </style>
 
@@ -64,10 +150,10 @@
     	<button id="btn1" class="btn btn-sm btn-primary float-lg-right" ng-click="addColumn('area1', 'area1_row')">Add column</button> <br><br>
 		<div id="area1" class="jumbotron">
 			<div id="area1_row" class="row vdivide">
-				<div id="example1" class="col-md-12 text-center">
-					<select style="width: 15%" class="float-lg-right" ng-options="option.name for option in options" ng-model="sel1" ng-click="selectService(sel1.src, 'example1')">
-            			<option value="" disabled selected> Select Service </option>
-					</select>
+				<div id="select_example1" class="col-md-12 text-center">
+					<select style="width: 15%" class="float-lg-right" ng-options="option.name group by option.type for option in options" ng-model="sel1" ng-change="selectService(sel1, 'select_example1')">
+            			<option value="" disabled selected> Select Tile </option>
+					</select><br><br>
 				</div>
 			</div>
 		</div>
@@ -76,10 +162,10 @@
 		<button id="btn2" class="btn btn-sm btn-primary float-lg-right" ng-click="addColumn('area2', 'area2_row')">Add column</button> <br><br>
 		<div id="area2" class="jumbotron">
 			<div id="area2_row" class="row vdivide">
-				<div id="example2" class="col-md-12 text-center">
-					<select style="width: 15%" class="float-lg-right" ng-options="option.name for option in options" ng-model="sel2" ng-click="selectService(sel2.src, 'example2')">
-            			<option value="" disabled selected> Select Service </option>
-					</select>
+				<div id="select_example2" class="col-md-12 text-center">
+					<select style="width: 15%" class="float-lg-right" ng-options="option.name group by option.type for option in options" ng-model="sel2" ng-change="selectService(sel2, 'select_example2')">
+            			<option value="" disabled selected> Select Tile </option>
+					</select><br><br>
 				</div>
 			</div>
 		</div>
@@ -88,10 +174,10 @@
 		<button id="btn3" class="btn btn-sm btn-primary float-lg-right" ng-click="addColumn('area3', 'area3_row')">Add column</button> <br><br>
 		<div id="area3" class="jumbotron">
 			<div id="area3_row" class="row vdivide">
-				<div id="example3" class="col-md-12 text-center">
-					<select style="width: 15%" class="float-lg-right" ng-options="option.name for option in options" ng-model="sel3" ng-click="selectService(sel3.src, 'example3')">
-            			<option value="" disabled selected> Select Service </option>
-					</select>
+				<div id="select_example3" class="col-md-12 text-center">
+					<select style="width: 15%" class="float-lg-right" ng-options="option.name group by option.type for option in options" ng-model="sel3" ng-change="selectService(sel3, 'select_example3')">
+            			<option value="" disabled selected> Select Tile </option>
+					</select><br><br>
 				</div>
 			</div>
 		</div>
@@ -100,9 +186,7 @@
     <!-- /.container -->
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Angular Controller -->
     <script src="/index.js"></script>
 
   </body>
